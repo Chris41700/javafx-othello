@@ -57,10 +57,6 @@ public class Main extends Application {
 			
 			getChildren().add(bg);
 		}
-		
-		void flip() {
-			isFlipped = !isFlipped;
-		}
 	}
 	
 	public static void main(String[] args) {
