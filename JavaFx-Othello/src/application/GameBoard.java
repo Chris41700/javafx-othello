@@ -1,21 +1,19 @@
 package application;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 
-public class GameBoard {
+public class GameBoard implements isIllegalMove {
 	private static final int GRID_SIZE = 8;
 	private static final int CELL_SIZE = 90;
 	private static final int PLAYER_SIZE = 2;
@@ -23,17 +21,19 @@ public class GameBoard {
 	Parent createContent() {
 		GridPane root = new GridPane();
 		root.setPrefSize(GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE);
-		Circle circle = new Circle(90);
+		HumanPlayer player = new HumanPlayer(32, "Fabio Pecora", true, 0);
+		ComputerPlayer computer = new ComputerPlayer(32, "Richard Weir", false, 0);
 
+		//Add Black and White Chip images
 		Image blackChip = new Image("C:\\Users\\Chris\\git\\javafx-othello\\JavaFx-Othello\\src\\application\\Black Chip.png");
-		BackgroundImage backgroundImageBlack = new BackgroundImage(blackChip, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Image whiteChip = new Image("C:\\Users\\Chris\\git\\javafx-othello\\JavaFx-Othello\\src\\application\\White Chip.png");
-		BackgroundImage backgroundImageWhite = new BackgroundImage(whiteChip, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		//Background bGround = new Background(backgroundImageBlack);
 		
+		//Creates the background
 		root.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 		root.setGridLinesVisible(true);
-		for (int i = 0; i < 8; i++) {
+		
+		//Creates rows and columns on the board
+		for (int i = 0; i < GRID_SIZE; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setPercentWidth(100.0 / 8);
             colConst.setHalignment(HPos.CENTER);
@@ -45,25 +45,43 @@ public class GameBoard {
             root.getRowConstraints().add(rowConst);
         }
 		
+		//Add a button to each rows and columns
+		for (int row = 0; row < GRID_SIZE; row++) {
+			for (int col = 0; col < GRID_SIZE; col++) {
+				Button b = new Button();
+				
+				//Set width and height to fit the cell
+				b.setPrefWidth(85);
+				b.setPrefHeight(85);
+				
+				//Check the position if there is a circle cause we don't want a button there
+				b.setVisible(true);
+				
+				//Add a function to the button so it let's the user place a chip
+				b.setOnAction(new EventHandler<ActionEvent>() {
+				    @Override
+				    public void handle(ActionEvent e) {
+				    	//Want to find the position of the button and add the image of that position
+				    	//Check the color of the image that we should put
+				    	root.add(new ImageView(blackChip), 4, 6);
+				    }
+				});
+				
+				//Add button to every cell
+				root.add(b, row, col);
+			}
+		}
+		
+		//Starting pieces on the board
 		root.add(new ImageView(blackChip), 3, 3);
 		root.add(new ImageView(blackChip), 4, 4);
 		root.add(new ImageView(whiteChip), 3, 4);
 		root.add(new ImageView(whiteChip), 4, 3);
-
-		
 		
 		return root;
 	}
-	/*
-	 * private class Cell extends StackPane { private boolean isFlipped = false;
-	 * private Rectangle bg;
-	 * 
-	 * Cell(int x, int y) { setTranslateX(x * CELL_SIZE); setTranslateY(y *
-	 * CELL_SIZE);
-	 * 
-	 * bg = new Rectangle(CELL_SIZE, CELL_SIZE, Color.GREEN);
-	 * bg.setStroke(Color.BLACK);
-	 * 
-	 * getChildren().add(bg); } }
-	 */
+	
+	public boolean isIllegal(int posX, int posY) {
+		return true;
+	}
 }

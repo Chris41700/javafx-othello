@@ -6,16 +6,15 @@ import javafx.scene.shape.Circle;
 public class Chip {
     protected boolean isPlaced = false;
     protected boolean isWhite = false;
-    private Circle circle = new Circle(20, 20, 30);
 
     public void turn() {
         if (isWhite == false) {
             isWhite = true;
-            circle.setFill(Color.WHITE);
+            //White Circle was set here
         }
         else if (isWhite == true) {
             isWhite = false;
-            circle.setFill(Color.BLACK);
+            //Black Circle was set here
         }
     }
 
@@ -25,8 +24,8 @@ public class Chip {
         }
         isPlaced = true;
     }
-
-    public Circle getCircle() {
-        return circle;
-    }
+//
+//    public Circle getCircle() {
+//    	//Returning the circle here
+//    }
 }
