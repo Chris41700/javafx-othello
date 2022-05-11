@@ -13,6 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.control.Button;
 
 public class GameBoard {
 	private static final int GRID_SIZE = 8;
@@ -22,11 +23,13 @@ public class GameBoard {
 	Parent createContent() {
 		GridPane root = new GridPane();
 		root.setPrefSize(GRID_SIZE * CELL_SIZE, GRID_SIZE * CELL_SIZE);
-		Circle circle = new Circle(20, 20, 30);
-	
-		Image image = new Image("C:\\Users\\Chris\\git\\javafx-othello\\JavaFx-Othello\\src\\application\\CSC330 - Black Chip.png");
-		BackgroundImage bImg = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		Background bGround = new Background(bImg);
+		Circle circle = new Circle(90);
+
+		Image blackChip = new Image("C:\\Users\\Chris\\git\\javafx-othello\\JavaFx-Othello\\src\\application\\Black Chip.png");
+		BackgroundImage backgroundImageBlack = new BackgroundImage(blackChip, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		Image whiteChip = new Image("C:\\Users\\Chris\\git\\javafx-othello\\JavaFx-Othello\\src\\application\\White Chip.png");
+		BackgroundImage backgroundImageWhite = new BackgroundImage(whiteChip, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		//Background bGround = new Background(backgroundImageBlack);
 		
 		root.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 		root.setGridLinesVisible(true);
@@ -41,21 +44,26 @@ public class GameBoard {
             rowConst.setValignment(VPos.CENTER);
             root.getRowConstraints().add(rowConst);
         }
+		
+		root.add(new ImageView(blackChip), 3, 3);
+		root.add(new ImageView(blackChip), 4, 4);
+		root.add(new ImageView(whiteChip), 3, 4);
+		root.add(new ImageView(whiteChip), 4, 3);
+
+		
+		
 		return root;
 	}
-	
-	private class Cell extends StackPane {
-		private boolean isFlipped = false;
-		private Rectangle bg;
-		
-		Cell(int x, int y) {
-			setTranslateX(x * CELL_SIZE);
-			setTranslateY(y * CELL_SIZE);
-			
-			bg = new Rectangle(CELL_SIZE, CELL_SIZE, Color.GREEN);
-			bg.setStroke(Color.BLACK);
-			
-			getChildren().add(bg);
-		}
-	}
+	/*
+	 * private class Cell extends StackPane { private boolean isFlipped = false;
+	 * private Rectangle bg;
+	 * 
+	 * Cell(int x, int y) { setTranslateX(x * CELL_SIZE); setTranslateY(y *
+	 * CELL_SIZE);
+	 * 
+	 * bg = new Rectangle(CELL_SIZE, CELL_SIZE, Color.GREEN);
+	 * bg.setStroke(Color.BLACK);
+	 * 
+	 * getChildren().add(bg); } }
+	 */
 }
